@@ -1,7 +1,7 @@
 /**
 * @name CopyRawEmbeds
 * @displayName CopyRawEmbeds
-* @source https://raw.githubusercontent.com/GR0SST/CopyRawEmbeds/master/CopyRawEmbeds.plugin.js
+* @source https://github.com/GR0SST/CopyRawEmbed/blob/main/CopyRawEmbeds.plugin.js
 * @authorId 371336044022464523
 */
 /*@cc_on
@@ -42,8 +42,8 @@ const config = {
         ],
         version: "1.0.0",
         description: "Пиздит любой эмбед",
-        github: "https://github.com/GR0SST/CopyRawEmbeds/blob/master/CopyRawEmbeds.plugin.js",
-        github_raw: "https://raw.githubusercontent.com/GR0SST/CopyRawEmbeds/master/CopyRawEmbeds.plugin.js",
+        github: "https://github.com/GR0SST/CopyRawEmbed/blob/main/CopyRawEmbeds.plugin.js",
+        github_raw: "https://raw.githubusercontent.com/GR0SST/CopyRawEmbed/main/CopyRawEmbeds.plugin.js",
 
     },
     changelog: [{
@@ -201,8 +201,6 @@ module.exports = !global.ZeresPluginLibrary ? class {
             });
 
 
-
-            //  Patcher.after(SlateTextAreaContextMenu, "default", patch);
 
         }
 
