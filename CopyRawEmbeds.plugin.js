@@ -1,7 +1,7 @@
 /**
 * @name CopyRawEmbeds
 * @displayName CopyRawEmbeds
-* @source https://raw.githubusercontent.com/GR0SST/CopyRawEmbeds/master/CopyRawEmbeds.plugin.js
+* @source https://raw.githubusercontent.com/GR0SST/CopyRawEmbed/main/CopyRawEmbeds.plugin.js
 * @authorId 371336044022464523
 */
 /*@cc_on
@@ -40,18 +40,17 @@ const config = {
                 discord_id: "3713360440224645238",
             }
         ],
-        version: "1.0.0",
+        version: "1.0.1",
         description: "Пиздит любой эмбед",
-        github: "https://github.com/GR0SST/CopyRawEmbeds/blob/master/CopyRawEmbeds.plugin.js",
-        github_raw: "https://raw.githubusercontent.com/GR0SST/CopyRawEmbeds/master/CopyRawEmbeds.plugin.js",
+        github: "https://github.com/GR0SST/CopyRawEmbed/blob/main/CopyRawEmbeds.plugin.js",
+        github_raw: "https://raw.githubusercontent.com/GR0SST/CopyRawEmbed/main/CopyRawEmbeds.plugin.js",
 
     },
     changelog: [{
         title: "Channel logs",
         type: "fixed",
         items: [
-            "Теперь можно спиздить любой эмбед",
-            "Просто ПКМ по сообщению и CopyRawEmbed"
+            
         ]
     }],
     defaultConfig: []
