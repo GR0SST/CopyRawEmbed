@@ -31,6 +31,7 @@ const request = require("request");
 const fs = require("fs");
 const path = require("path");
 
+
 const config = {
     info: {
         name: "CopyRawEmbeds",
@@ -40,8 +41,8 @@ const config = {
                 discord_id: "3713360440224645238",
             }
         ],
-        version: "1.0.1",
-        description: "Пиздит любой эмбед",
+        version: "1.1.0",
+        description: "Can copy any embed as a json",
         github: "https://github.com/GR0SST/CopyRawEmbed/blob/main/CopyRawEmbeds.plugin.js",
         github_raw: "https://raw.githubusercontent.com/GR0SST/CopyRawEmbed/main/CopyRawEmbeds.plugin.js",
 
@@ -50,6 +51,7 @@ const config = {
         title: "Channel logs",
         type: "fixed",
         items: [
+            "Fixed color of copied embeds"
             
         ]
     }],
@@ -99,6 +101,7 @@ module.exports = !global.ZeresPluginLibrary ? class {
     stop() { }
 } : (([Plugin, Library]) => {
     const { DiscordModules, WebpackModules, Patcher, DiscordContextMenu, Settings } = Library;
+    const nums = /\d+/;
     class CopyRawEmbeds extends Plugin {
         constructor() {
             super();
@@ -122,17 +125,10 @@ module.exports = !global.ZeresPluginLibrary ? class {
         }
         renameKey(object, key, newKey) {
             const clone = (obj) => Object.assign({}, obj);
-
             const clonedObj = clone(object);
-
             const targetKey = clonedObj[key];
-
-
-
             delete clonedObj[key];
-
             clonedObj[newKey] = targetKey;
-
             return clonedObj;
 
         };
@@ -163,6 +159,16 @@ module.exports = !global.ZeresPluginLibrary ? class {
                                             delete embed.author.iconProxyURL
                                             embed.author = this.renameKey(embed.author, "iconURL", "icon_url")
                                         }
+
+                                        if (embed.color !== undefined) {
+                                            let hsl = embed.color.split(" ")
+                                            let hue = hsl[0].match(nums)[0]
+                                            let saturation = hsl[4].match(nums)[0]
+                                            let lightness = hsl[5].match(nums)[0]
+                                            let hex = this.HSLToHex(hue,saturation,lightness)
+                                            embed.color = hex   
+                                        }
+
                                         if (embed.footer !== undefined) {
                                             delete embed.footer.iconProxyURL
                                             embed.footer = this.renameKey(embed.footer, "iconURL", "icon_url")
@@ -199,11 +205,47 @@ module.exports = !global.ZeresPluginLibrary ? class {
                 );
             });
 
-
-
-            //  Patcher.after(SlateTextAreaContextMenu, "default", patch);
-
         }
+
+        HSLToHex(h,s,l) {
+            s /= 100;
+            l /= 100;
+          
+            let c = (1 - Math.abs(2 * l - 1)) * s,
+                x = c * (1 - Math.abs((h / 60) % 2 - 1)),
+                m = l - c/2,
+                r = 0,
+                g = 0, 
+                b = 0; 
+          
+            if (0 <= h && h < 60) {
+              r = c; g = x; b = 0;
+            } else if (60 <= h && h < 120) {
+              r = x; g = c; b = 0;
+            } else if (120 <= h && h < 180) {
+              r = 0; g = c; b = x;
+            } else if (180 <= h && h < 240) {
+              r = 0; g = x; b = c;
+            } else if (240 <= h && h < 300) {
+              r = x; g = 0; b = c;
+            } else if (300 <= h && h < 360) {
+              r = c; g = 0; b = x;
+            }
+            // Having obtained RGB, convert channels to hex
+            r = Math.round((r + m) * 255).toString(16);
+            g = Math.round((g + m) * 255).toString(16);
+            b = Math.round((b + m) * 255).toString(16);
+          
+            // Prepend 0s, if necessary
+            if (r.length == 1)
+              r = "0" + r;
+            if (g.length == 1)
+              g = "0" + g;
+            if (b.length == 1)
+              b = "0" + b;
+          
+            return "#" + r + g + b;
+          }
 
 
     }
