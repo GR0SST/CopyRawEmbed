@@ -3,6 +3,7 @@
 * @displayName CopyRawEmbeds
 * @source https://raw.githubusercontent.com/GR0SST/CopyRawEmbed/main/CopyRawEmbeds.plugin.js
 * @authorId 371336044022464523
+* @version 1.1.1
 */
 /*@cc_on
 @if (@_jscript)
@@ -41,7 +42,7 @@ const config = {
                 discord_id: "3713360440224645238",
             }
         ],
-        version: "1.1.0",
+        version: "1.1.1",
         description: "Can copy any embed as a json",
         github: "https://github.com/GR0SST/CopyRawEmbed/blob/main/CopyRawEmbeds.plugin.js",
         github_raw: "https://raw.githubusercontent.com/GR0SST/CopyRawEmbed/main/CopyRawEmbeds.plugin.js",
@@ -51,7 +52,7 @@ const config = {
         title: "Channel logs",
         type: "fixed",
         items: [
-            "Fixed color of copied embeds"
+            "Updated old links", "Update some stuff with embed colors"
             
         ]
     }],
@@ -87,7 +88,7 @@ module.exports = !global.ZeresPluginLibrary ? class {
             onConfirm: () => {
                 request.get("https://rauenzi.github.io/BDPluginLibrary/release/0PluginLibrary.plugin.js", (error, response, body) => {
                     if (error) {
-                        return electron.shell.openExternal("https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js");
+                        return require("electron").shell.openExternal("https://betterdiscord.app/plugin/ZeresPluginLibrary")
                     }
 
                     fs.writeFileSync(path.join(BdApi.Plugins.folder, "0PluginLibrary.plugin.js"), body);
@@ -165,7 +166,7 @@ module.exports = !global.ZeresPluginLibrary ? class {
                                             let hue = hsl[0].match(nums)[0]
                                             let saturation = hsl[4].match(nums)[0]
                                             let lightness = hsl[5].match(nums)[0]
-                                            let hex = this.HSLToHex(hue,saturation,lightness)
+                                            let hex = this.HSLToDec(hue,saturation,lightness)
                                             embed.color = hex   
                                         }
 
@@ -196,7 +197,7 @@ module.exports = !global.ZeresPluginLibrary ? class {
                                             embed.fields = fields;
                                         }
                                         this.copyToClipboard(JSON.stringify(embed, null, '\t'))
-                                        Library.Toasts.success("Embed coped")
+                                        Library.Toasts.success("Embed copied")
                                     },
                                 },
                             ],
@@ -207,7 +208,7 @@ module.exports = !global.ZeresPluginLibrary ? class {
 
         }
 
-        HSLToHex(h,s,l) {
+        HSLToDec(h,s,l) {
             s /= 100;
             l /= 100;
           
@@ -235,7 +236,7 @@ module.exports = !global.ZeresPluginLibrary ? class {
             r = Math.round((r + m) * 255).toString(16);
             g = Math.round((g + m) * 255).toString(16);
             b = Math.round((b + m) * 255).toString(16);
-          
+            
             // Prepend 0s, if necessary
             if (r.length == 1)
               r = "0" + r;
@@ -243,8 +244,9 @@ module.exports = !global.ZeresPluginLibrary ? class {
               g = "0" + g;
             if (b.length == 1)
               b = "0" + b;
-          
-            return "#" + r + g + b;
+              
+            let hex = r + g + b
+            return parseInt(hex, 16);
           }
 
 
