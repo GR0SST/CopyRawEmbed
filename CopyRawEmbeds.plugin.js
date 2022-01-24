@@ -42,7 +42,7 @@ const config = {
                 discord_id: "3713360440224645238",
             }
         ],
-        version: "1.1.1",
+        version: "1.1.2",
         description: "Can copy any embed as a json",
         github: "https://github.com/GR0SST/CopyRawEmbed/blob/main/CopyRawEmbeds.plugin.js",
         github_raw: "https://raw.githubusercontent.com/GR0SST/CopyRawEmbed/main/CopyRawEmbeds.plugin.js",
@@ -52,7 +52,7 @@ const config = {
         title: "Channel logs",
         type: "fixed",
         items: [
-            "Updated old links", "Update some stuff with embed colors"
+            "Hot fix"
             
         ]
     }],
@@ -101,7 +101,7 @@ module.exports = !global.ZeresPluginLibrary ? class {
 
     stop() { }
 } : (([Plugin, Library]) => {
-    const { DiscordModules, WebpackModules, Patcher, DiscordContextMenu, Settings } = Library;
+    const { DiscordModules, WebpackModules, Patcher, DCM, Settings } = Library;
     const nums = /\d+/;
     class CopyRawEmbeds extends Plugin {
         constructor() {
@@ -140,7 +140,7 @@ module.exports = !global.ZeresPluginLibrary ? class {
             Patcher.after(SlateTextAreaContextMenu, "default", (thisObject, [props], returnValue) => {
                 if (props.message.embeds[0] === undefined) return;
                 returnValue.props.children.push(
-                    DiscordContextMenu.buildMenuChildren([
+                    DCM.buildMenuChildren([
                         {
                             type: "group",
                             items: [
